@@ -1,0 +1,387 @@
+/*
+ * WooCommerce Gift Box Builder Frontend Styles
+ *
+ * This file provides the primary styling for the multi-step gift box builder
+ * interface. It includes styles for general layout, product grids, cards,
+ * modals, the fixed summary display, navigation, and responsive adjustments
+ * to ensure a consistent user experience across various devices.
+ *
+ * @package WooCommerceGiftBoxBuilder/Assets/CSS
+ * @version 1.0.0
+ */
+
+/* ==========================================================================
+   General Container & Step Styling
+   ========================================================================== */
+
+.wgbb-container {
+    margin-top: 20px; /* Top margin for the main builder container. */
+    margin-bottom: 20px; /* Default bottom margin. */
+    /* Add padding to the bottom of the main container to prevent overlap 
+       with the fixed summary bar, which is approx 200px high + some buffer. */
+    padding-bottom: 220px; 
+}
+
+.wgbb-step {
+    padding: 20px; /* Inner padding for each step container. */
+    border: 1px solid #e0e0e0; /* Light border around steps. */
+    border-radius: 5px; /* Slightly rounded corners for steps. */
+    background-color: #fff; /* White background for steps. */
+    margin-bottom: 20px; /* Space below each step. */
+}
+
+.wgbb-step h2.card-title { /* Targeting Bootstrap's card-title specifically if steps are cards */
+    margin-bottom: 20px; /* Space below step titles. */
+    font-size: 1.8em; /* Larger font size for step titles. */
+    color: #333; /* Dark grey color for titles. */
+    text-align: center; /* Center-align step titles. */
+}
+
+/* ==========================================================================
+   Product Grid & Card Styling (Steps 1, 2, 3)
+   ========================================================================== */
+
+/* This selector is for the dynamically generated grid inside step content (Steps 2 & 3) 
+   and the initial grid in Step 1 if not using Bootstrap .row directly in PHP. 
+   The PHP was updated to use .row, so this might be less critical but good for consistency. */
+.wgbb-product-grid {
+    /* display: grid; already handled by Bootstrap .row and .col-* system */
+    gap: 20px; /* Gap between grid items (cards). Bootstrap's .mb-4 on cols handles this too. */
+}
+
+.wgbb-product-card {
+    /* border: 1px solid #ddd; Bootstrap card class handles this */
+    /* border-radius: 4px; Bootstrap card class handles this */
+    /* padding: 15px; Bootstrap card-body class handles this */
+    text-align: center; /* Center-align content within cards. */
+    /* background-color: #f9f9f9; Bootstrap card class handles this */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects. */
+    height: 100%; /* Ensure cards in a row take up equal height (Bootstrap .h-100). */
+}
+
+.wgbb-product-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Enhanced shadow on hover. */
+    transform: translateY(-3px); /* Slight lift effect on hover. */
+}
+
+/* Styling for the selected product card (e.g., the chosen box in Step 1). */
+.wgbb-product-card.selected {
+    border-color: #007bff; /* Bootstrap primary color for border. */
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* Bootstrap focus shadow. */
+    background-color: #e7f3ff; /* Light blue background for selected state. */
+}
+
+.wgbb-product-image {
+    margin-bottom: 15px; /* Space below the image. */
+    overflow: hidden; /* Ensures image is contained if using border-radius on img. */
+    /* border-radius: 3px; Optional: if images have sharp corners. */
+    height: 150px; /* Fixed height for image container. */
+}
+
+.wgbb-product-image img {
+    max-width: 100%;
+    height: 100%; /* Make image fill the container height. */
+    display: block; /* Remove extra space below image. */
+    margin: 0 auto; /* Center image if it's smaller than container. */
+    object-fit: contain; /* Ensure aspect ratio is maintained without cropping, fitting within container. */
+}
+
+.wgbb-product-name {
+    font-size: 1.0em; /* Adjusted for Bootstrap card context (h5). */
+    font-weight: bold;
+    margin-bottom: 10px;
+    min-height: 40px; /* Give space for approx 2 lines of text, helps card alignment. */
+}
+
+/* Ensure buttons within cards take full width and are pushed to the bottom if card body uses flex. */
+.wgbb-select-product-button, /* Button in Step 1 cards. */
+.wgbb-add-to-box-button { /* Button in Step 2/3 cards (opens modal). */
+    width: 100%;
+    /* mt-auto is used in HTML for Bootstrap flex cards. */
+}
+
+/* ==========================================================================
+   Navigation Button Styling
+   ========================================================================== */
+
+.wgbb-navigation {
+    margin-top: 30px; /* Space above navigation buttons. */
+    /* display: flex; and justify-content: space-between; are handled by Bootstrap .d-flex etc. in HTML */
+}
+
+/* General styling for navigation buttons, using Bootstrap .btn classes is preferred. */
+#wgbb-prev-button,
+#wgbb-next-button {
+    padding: 10px 20px; /* Custom padding if needed. */
+    font-size: 1em;
+}
+
+/* Specific styling for Next button when disabled. */
+#wgbb-next-button:disabled {
+    background-color: #a0d0ff; /* Lighter blue when disabled. */
+    cursor: not-allowed; /* Standard disabled cursor. */
+}
+
+
+/* ==========================================================================
+   Modal Styling (Product Details Popup)
+   ========================================================================== */
+
+#wgbbProductModal .modal-dialog {
+    max-width: 700px; /* Custom max-width for a larger modal. */
+}
+
+#wgbbProductModal .modal-header {
+    border-bottom: 1px solid #dee2e6; /* Standard Bootstrap modal header border. */
+}
+#wgbbProductModal .modal-title {
+    font-size: 1.5em; /* Larger title font size in modal. */
+}
+#wgbbProductModal .modal-body {
+    padding: 20px; /* Padding within the modal body. */
+}
+
+/* Styling for product image within the modal. */
+#wgbbProductModal .wgbb-popup-product-image {
+    /* max-width: 100%; height: auto; handled by .img-fluid Bootstrap class. */
+    margin-bottom: 15px; /* Space below image if layout stacks on small screens. */
+    /* border-radius: 4px; Handled by .rounded Bootstrap class. */
+}
+
+#wgbbProductModal .wgbb-popup-product-short-desc {
+    font-size: 0.95em;
+    color: #555; /* Slightly lighter text for description. */
+}
+#wgbbProductModal .wgbb-popup-product-price {
+    /* font-size: 1.3em; Handled by .h4 Bootstrap class. */
+    font-weight: bold;
+    color: #28a745; /* Bootstrap success color for price. */
+}
+
+/* Limit width of quantity input group in modal. */
+#wgbbProductModal .wgbb-popup-quantity-section .input-group {
+    max-width: 180px; /* Adjusted width. */
+}
+#wgbbProductModal .wgbb-popup-qty { /* The actual number input field. */
+    text-align: center;
+}
+
+/* Stock warning message styling in modal. */
+#wgbbProductModal .wgbb-popup-stock-warning {
+    font-size: 0.9em;
+    margin-top: 5px;
+    /* color: red; Handled by .text-danger Bootstrap class. */
+}
+
+/* Styling for variation selection table within the modal. */
+#wgbbProductModal .variations label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+#wgbbProductModal .variations select.form-control-sm { /* Target Bootstrap class if added. */
+    margin-bottom: 10px; /* Space below each select dropdown. */
+}
+
+/* ==========================================================================
+   Fixed Summary Display Styling
+   ========================================================================== */
+
+/* #wgbb-summary-container is styled via Bootstrap classes in HTML:
+   fixed-bottom bg-light p-3 border-top shadow-lg */
+#wgbb-summary-container {
+    z-index: 1040; /* Position below Bootstrap modal backdrop (1050) but above most page content. */
+    max-height: 200px; /* Limit height of summary bar. */
+    overflow-y: auto; /* Allow scrolling if content exceeds max-height. */
+}
+
+#wgbb-summary h4 { /* Title within the summary bar. */
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+    color: #333;
+}
+#wgbb-summary ul { /* List of items in summary. */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+#wgbb-summary .summary-item { /* Individual item in summary. */
+    padding: 5px 0;
+    border-bottom: 1px solid #eee; /* Separator line between items. */
+    font-size: 0.95em;
+}
+#wgbb-summary .summary-item:last-child {
+    border-bottom: none; /* No border for the last item. */
+}
+#wgbb-summary .summary-box strong { /* Styling for "Box:" label. */
+    color: #0056b3; /* Darker blue for emphasis. */
+}
+
+/* Styling for "Remove" buttons within the summary. */
+#wgbb-summary .wgbb-remove-item {
+    /* color: #dc3545; Handled by .btn-danger Bootstrap class (though btn-xs is custom). */
+    /* background: none; border: none; Handled by Bootstrap .btn utility classes. */
+    padding: 0.1rem 0.3rem; /* Smaller padding for .btn-xs effect. */
+    font-size: 0.8em;     /* Smaller font for .btn-xs effect. */
+    line-height: 1.2;
+    /* cursor: pointer; Handled by .btn */
+}
+#wgbb-summary .wgbb-remove-item:hover {
+    text-decoration: underline; /* Simple hover effect if not using button hover styles. */
+}
+
+/* Styling for the "empty summary" message. */
+#wgbb-summary p.text-muted { 
+    margin: 0;
+    font-style: italic;
+}
+
+/* ==========================================================================
+   Step 4: Finalize & Add to Cart Styling
+   ========================================================================== */
+
+#wgbb-step-4 h2.card-title {
+    margin-bottom: 15px;
+}
+#wgbb-step-4 p.lead { /* Lead paragraph styling from Bootstrap. */
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    /* text-align: center; Handled by .text-center on card-body in HTML. */
+}
+
+/* Spacing for action buttons in Step 4. */
+#wgbb-step-4-actions .btn { /* Targeting Bootstrap .btn class. */
+    margin-right: 10px;
+    margin-bottom: 10px; /* For stacking on small screens. */
+}
+#wgbb-step-4-actions .btn:last-child {
+    margin-right: 0;
+}
+
+/* Styling for Add to Cart success/error messages. */
+#wgbb-add-to-cart-messages {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    /* Specific background/color handled by .alert-success or .alert-danger via JS. */
+}
+
+/* ==========================================================================
+   Loading Indicators Styling
+   ========================================================================== */
+
+/* Styling for text-based loading placeholder if Bootstrap spinner is not used. */
+.wgbb-step .loading-placeholder-text, 
+#wgbbProductModal .wgbb-modal-loading p { /* If using a <p> tag for modal loading. */
+    font-size: 1.2em;
+    text-align: center;
+    padding: 20px;
+    color: #777;
+}
+/* Bootstrap spinner (.spinner-border) is used in the modal, styled by Bootstrap itself. */
+
+
+/* ==========================================================================
+   Responsive Media Queries
+   ========================================================================== */
+
+/* Tablet devices (and smaller desktops) */
+@media (max-width: 991.98px) { /* Bootstrap's lg breakpoint */
+    .wgbb-product-grid .col-lg-3 { /* If using col-lg-3, adjust for tablets */
+        flex: 0 0 50%; /* Two columns on tablets */
+        max-width: 50%;
+    }
+}
+
+
+@media (max-width: 767.98px) { /* Bootstrap's md breakpoint (tablets) */
+    .wgbb-step h2.card-title {
+        font-size: 1.5em; /* Slightly smaller title on tablets. */
+    }
+    .wgbb-product-grid .col-md-4 { /* If using col-md-4, adjust for smaller tablets */
+        flex: 0 0 50%; /* Two columns */
+        max-width: 50%;
+    }
+     .wgbb-product-name {
+        font-size: 0.95em;
+        min-height: 38px; /* Adjust min-height. */
+    }
+    #wgbbProductModal .modal-dialog {
+        max-width: 95%; /* Allow modal to use more width on tablets. */
+    }
+    #wgbb-summary-container {
+        padding: 10px; /* Reduce padding on smaller screens. */
+        max-height: 150px; /* Slightly less height for summary bar. */
+    }
+    #wgbb-summary h4 {
+        font-size: 1.1em;
+    }
+     .wgbb-container {
+        padding-bottom: 170px; /* Adjust main container padding for smaller summary height. */
+    }
+}
+
+/* Mobile devices */
+@media (max-width: 575.98px) { /* Bootstrap's sm breakpoint (smartphones) */
+    .wgbb-product-grid .col-sm-6 { /* If using col-sm-6, adjust for mobiles */
+        flex: 0 0 100%; /* One column on mobiles */
+        max-width: 100%;
+    }
+     .wgbb-product-card {
+        padding: 10px; /* Reduce card padding. */
+    }
+    .wgbb-product-image {
+        height: 120px; /* Smaller image height on mobiles. */
+    }
+    .wgbb-product-name {
+        font-size: 0.9em;
+        min-height: auto; /* Auto min-height for product names. */
+    }
+
+    /* Stack action buttons in Step 4 on mobile. */
+    #wgbb-step-4-actions .btn {
+        width: 100%; 
+        margin-right: 0; /* Remove right margin when stacked. */
+    }
+    #wgbb-step-4-actions .btn:last-child {
+        margin-bottom: 0;
+    }
+
+    .wgbb-navigation {
+        flex-direction: column; /* Stack Prev/Next buttons. */
+    }
+    .wgbb-navigation button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .wgbb-navigation button:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* Fallback button styling - These are less critical now that Bootstrap .btn classes are used in HTML.
+   They can serve as a base if Bootstrap is not loaded or styles are removed. */
+.wgbb-button-base {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+/* Example application of base if specific classes are not enough:
+#wgbb-next-button, .wgbb-select-product-button {
+    @extend .wgbb-button-base; // If using SCSS, or copy properties
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+*/
+```

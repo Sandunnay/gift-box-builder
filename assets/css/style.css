@@ -1,0 +1,72 @@
+/* assets/css/style.css */
+.gbb-step {
+    /* Basic styling for steps, e.g., padding or margin */
+    /* Using Bootstrap cards, so additional padding might not be strictly necessary here */
+    /* border: 1px solid #ddd; */ /* Card will provide its own border */
+    margin-bottom: 20px;
+}
+.gbb-navigation {
+    margin-top: 20px;
+    display: flex; /* Use flexbox for button alignment */
+    justify-content: space-between; /* Puts space between prev and next buttons */
+}
+
+/* Add d-none class if not using Bootstrap 5 or if needed for compatibility */
+/* Bootstrap 4 & 5 include d-none, but good to have for wider compatibility or if Bootstrap isn't fully loaded */
+.d-none { 
+    display: none !important; 
+}
+
+/* Optional: some spacing for the product list items if they are too dense */
+.gbb-product-list li {
+    margin-bottom: 10px;
+}
+
+/* Common styles for product cards in the gift box builder */
+.gbb-product-list .card { /* Targets any card within gbb-product-list */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    cursor: pointer; /* Indicate items are clickable */
+}
+
+.gbb-product-list .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Styles for the selected card (border-primary and shadow are toggled by JS) */
+/* Example: if a specific border width is desired for selected items */
+/* .gbb-product-list .card.border-primary {
+    border-width: 2px !important;
+} */
+
+/* Ensure images are responsive and fit well */
+.gbb-product-list .card-img-top {
+    width: 100%;
+    /* max-height: 180px; /* Defined inline in helper, can be here for consistency */
+    /* object-fit: contain; /* Defined inline in helper */
+    padding: 0.5rem; 
+}
+
+.gbb-product-list .card-title {
+    font-size: 1rem; 
+    margin-bottom: 0.25rem; /* Reduced margin */
+}
+.gbb-product-list .card-body small.text-muted { /* Style for short description */
+    font-size: 0.75rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    height: calc(1.3em * 3); /* Approx 3 lines, adjust 1.3em based on line-height */
+    overflow: hidden;
+}
+
+.gbb-product-list .price {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.5rem; /* Reduced margin */
+}
+
+/* Specific button styling if needed, though Bootstrap classes are primary */
+.gbb-select-button, .gbb-add-to-box-button {
+    /* Common button styles if any beyond Bootstrap */
+}
